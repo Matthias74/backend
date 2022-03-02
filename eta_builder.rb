@@ -4,12 +4,13 @@ require_relative "package_eta_builder"
 class ShipupEtaBuilderException < StandardError; end
 
 class EtaBuilder
-  attr_reader :input
+  attr_reader :input, :output_name
   attr_accessor :carriers
 
-  def initialize(input)
+  def initialize(input, output_name)
     @input = input
     @carriers = nil
+    @output_name = output_name
   end
 
   def compute!
@@ -23,7 +24,7 @@ class EtaBuilder
 
     puts JSON.dump({ deliveries: deliveries})
 
-    # File.write('../backend/outputs/level_1.json', JSON.dump({ deliveries: deliveries}))
+    # File.write("#{output_name}.json", JSON.dump({ deliveries: deliveries}))
   end
 
   private
@@ -37,7 +38,7 @@ class EtaBuilder
 
   def build_carriers
     @carriers = input["carriers"].map do |carrier|
-      Carrier.new(carrier["code"], carrier["delivery_promise"])
+      Carrier.new(carrier["code"], carrier["delivery_promise"], carrier["saturday_deliveries"])
     end
   end
 
