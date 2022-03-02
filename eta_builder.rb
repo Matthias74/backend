@@ -23,8 +23,8 @@ class EtaBuilder
     end
 
     puts JSON.dump({ deliveries: deliveries})
-
-    # File.write("#{output_name}.json", JSON.dump({ deliveries: deliveries}))
+    puts "Find me also in json file here: #{output_name}.json"
+    File.write("#{output_name}.json", JSON.dump({ deliveries: deliveries}))
   end
 
   private
