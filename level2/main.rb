@@ -1,5 +1,8 @@
 require "json"
 require_relative "../eta_builder"
+require_relative "../input_builder/from_json"
 
-data = JSON.parse(File.read('./level2/data/input.json'))
-EtaBuilder.new(data, "level2_expected_output").compute!
+EtaBuilder.new(
+  InputBuilder::FromJson.new("./level2/data/input.json"),
+  "level2_expected_output"
+).compute!
